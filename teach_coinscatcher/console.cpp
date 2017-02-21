@@ -24,6 +24,10 @@ namespace
 
 } // namespace
 
+void clrscr(const Point &p, unsigned width, unsigned height, Color bkgnColor)
+{
+	clrscr(p.x, p.y, width, height, bkgnColor);
+}
 
 void clrscr(Coord x, Coord y, unsigned width, unsigned height, Color bkgnColor)
 {

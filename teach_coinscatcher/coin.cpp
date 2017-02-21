@@ -58,5 +58,5 @@ void RemoveCoin() {
 	}
 	startTime = now + 1;
 	removeTime = 0;
-	clrscr(coinPoint.x, coinPoint.y, 1, 1);
+	clrscr(coinPoint, 1, 1);
 }

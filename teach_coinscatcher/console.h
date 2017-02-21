@@ -27,6 +27,7 @@ enum Color
 
 void gotoxy(Coord x, Coord y);
 void gotoxy(const Point& p);
+void clrscr(const Point &p, unsigned width, unsigned height, Color bkgnColor = BLACK_COLOR);
 void clrscr(Coord x, Coord y, unsigned width, unsigned height, Color bkgnColor = BLACK_COLOR);
 Color gettextcolor();
 Color settextcolor(Color color);
