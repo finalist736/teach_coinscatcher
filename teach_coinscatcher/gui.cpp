@@ -1,19 +1,34 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <time.h>
 #include <stdio.h>
+#include <string.h>
 #include "console.h"
 #include "gui.h"
 
 bool started = false;
 time_t timeToEnd = 0;
+
+int TimeOut = 59;
+
+int coinsCount = 0;
+int lastCoinsCount = -1;
+
 int framesIgnored = 0;
 
+char coinsText[20] = { 0 };
 
 void updateTimer();
 void updateCoins();
+
+void SetTimeOut(int v)
+{
+	TimeOut = v;
+}
+
 void StartGUI()
 {
 	started = true;
-	timeToEnd = 59;
+	timeToEnd = TimeOut;
 	framesIgnored = 9;
 }
 
@@ -22,7 +37,7 @@ void StopGUI(){
 }
 
 void AddCoin(){
-
+	coinsCount++;
 }
 
 void UpdateGUI(){
@@ -58,5 +73,16 @@ bool GameOver() {
 }
 
 void updateCoins(){
+	if (lastCoinsCount == coinsCount)
+	{
+		return;
+	}
+	memset(coinsText, 0, 20);
+	sprintf(coinsText, "coins: %d", coinsCount);
+	int len = strlen(coinsText);
+	gotoxy(80 - len, 0);
+	settextcolor(WHITE_COLOR);
+	printf(coinsText);
+	lastCoinsCount = coinsCount;
 
 }

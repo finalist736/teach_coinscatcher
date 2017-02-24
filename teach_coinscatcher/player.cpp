@@ -110,9 +110,9 @@ void UpdatePlayer()
 
 	if (point.y == 25)
 	{
-		point.y = 0;
+		point.y = 1;
 	}
-	else if (point.y == -1) {
+	else if (point.y == 0) {
 		point.y = 24;
 	}
 
@@ -120,4 +120,8 @@ void UpdatePlayer()
 	gotoxy(point);
 	settextcolor(RED_COLOR);
 	std::cout << (char)2;
+}
+
+const Point& PlayerPosition() {
+	return point;
 }

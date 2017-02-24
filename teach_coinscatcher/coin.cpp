@@ -9,10 +9,14 @@ static int removeTime = 0;
 static time_t now = 0;
 
 static Point coinPoint;
-
+static int CoinLifeTime = 5;
 
 void ShowCoin();
 void RemoveCoin();
+
+void SetCoinLifeTime(int value){
+	CoinLifeTime = value;
+}
 
 void StartCoin(){
 	startTime = time(NULL) + 1;
@@ -23,9 +27,13 @@ void UpdateCoin() {
 	RemoveCoin();
 }
 
+const Point& CoinPosition() {
+	return coinPoint;
+}
+
 inline void GetRandomPoint() {
 	coinPoint.x = rand() % 80;
-	coinPoint.y = rand() % 25;
+	coinPoint.y = rand() % 24 + 1;
 }
 
 void ShowCoin() {
@@ -43,7 +51,14 @@ void ShowCoin() {
 	settextcolor(GREEN_COLOR);
 	std::cout << '$';
 	startTime = 0;
-	removeTime = now + 5;
+	removeTime = now + CoinLifeTime;
+}
+
+void CaptureCoin() {
+	coinPoint.x = 40;
+	coinPoint.y = 0;
+	removeTime = 0;
+	startTime = time(NULL) + 1;
 }
 
 void RemoveCoin() {
