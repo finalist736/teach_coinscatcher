@@ -1,5 +1,5 @@
 #include <iostream>
-#include <Windows.h>
+
 #include "player.h"
 #include <stdio.h>
 
@@ -9,23 +9,24 @@ static bool played = false;
 //static time_t now = 0;
 
 static Point point;
+static unsigned short currentKey = 0;
 
-HANDLE rhnd = GetStdHandle(STD_INPUT_HANDLE);  // handle to read console
-
-DWORD Events = 0;     // Event count
-DWORD EventsRead = 0; // Events read from console
 
 void StartPlayer()
 {
 	played = true;
+}
+
+void DefaultPlayerPosition()
+{
 	point.x = 40;
 	point.y = 12;
+	played = true;
+}
 
-
-	rhnd = GetStdHandle(STD_INPUT_HANDLE);  // handle to read console
-
-	//DWORD Events = 0;     // Event count
-	//DWORD EventsRead = 0; // Events read from console
+void SetCurrentKey(unsigned short k)
+{
+	currentKey = k;
 }
 
 //int elasped = 0;
@@ -48,57 +49,24 @@ void UpdatePlayer()
 
 	// change point from keyboard
 	//getchar();
-
-	GetNumberOfConsoleInputEvents(rhnd, &Events);
-
-	if (Events != 0){ // if something happened we will handle the events we want
-
-		// create event buffer the size of how many Events
-		INPUT_RECORD *eventBuffer = new INPUT_RECORD[Events];
-
-		// fills the event buffer with the events and saves count in EventsRead
-		ReadConsoleInput(rhnd, eventBuffer, Events, &EventsRead);
-
-		// loop through the event buffer using the saved count
-		for (DWORD i = 0; i < EventsRead; ++i){
-
-			// check if event[i] is a key event && if so is a press not a release
-			if (eventBuffer[i].EventType == KEY_EVENT && eventBuffer[i].Event.KeyEvent.bKeyDown){
-
-				// check if the key press was an arrow key
-				switch (eventBuffer[i].Event.KeyEvent.wVirtualKeyCode){
-				case VK_LEFT:
-					point.x--;
-					break;
-				case VK_RIGHT:
-					point.x++;
-					break;
-				case VK_UP:
-					point.y--;
-					break;
-				case VK_DOWN:   // if any arrow key was pressed break here
-					//std::cout << "arrow key pressed.\n";
-					point.y++;
-					break;
-
-				case VK_ESCAPE: // if escape key was pressed end program loop
-					std::cout << "escape key pressed.\n";
-					//Running = false;
-					break;
-
-				default:        // no handled cases where pressed 
-					std::cout << "key not handled pressed.\n";
-					break;
-				}
-			}
-
-		} // end EventsRead loop
-		delete[] eventBuffer;
-
+//#define VK_LEFT           0x25
+//#define VK_UP             0x26
+//#define VK_RIGHT          0x27
+//#define VK_DOWN           0x28
+	switch (currentKey){
+	case 0x25:
+		point.x--;
+		break;
+	case 0x27:
+		point.x++;
+		break;
+	case 0x26:
+		point.y--;
+		break;
+	case 0x28:
+		point.y++;
+		break;
 	}
-
-	/*point.x++;
-	point.y++;*/
 
 	// check ranges
 	if (point.x == 80)
@@ -124,4 +92,9 @@ void UpdatePlayer()
 
 const Point& PlayerPosition() {
 	return point;
+}
+
+void SetPlayerPosition(const Point& p)
+{
+	point = p;
 }

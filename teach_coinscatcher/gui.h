@@ -4,3 +4,9 @@ void StartGUI();
 void StopGUI();
 void AddCoin();
 void UpdateGUI();
+// coins
+int CurrentCoinsCount();
+void SetCoinsCount(int);
+// timer
+int CurrentTimer();
+void SetTimer(int);

@@ -31,6 +31,13 @@ const Point& CoinPosition() {
 	return coinPoint;
 }
 
+void SetCoinPosition(const Point& p)
+{
+	coinPoint = p;
+	startTime = 0;
+	removeTime = now + CoinLifeTime;
+}
+
 inline void GetRandomPoint() {
 	coinPoint.x = rand() % 80;
 	coinPoint.y = rand() % 24 + 1;

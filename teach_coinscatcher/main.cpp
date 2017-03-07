@@ -3,7 +3,8 @@
 #include "coin.h"
 #include "player.h"
 #include "gui.h"
-
+#include "keyboard.h"
+#include "save.h"
 
 using namespace std;
 
@@ -12,15 +13,48 @@ inline bool ComparePositions(const Point &a, const Point &b) {
 }
 
 int main() {
+	GameSave sg;
+	SetCoinLifeTime(10);
+	if (GameLoadAvailable() && LoadGame(&sg))
+	{
+		SetPlayerPosition(Point(sg.Px, sg.Py));
+		SetCoinPosition(Point(sg.Cx, sg.Cy));
+		SetCoinsCount(sg.Coins);
+		SetTimer(sg.Timer);
+		StartPlayer();
+		
+	}
+	else
+	{
+		SetTimeOut(60);
+		DefaultPlayerPosition();
+		StartCoin();
+		StartGUI();
+	}
 
-	SetCoinLifeTime(10);// skolko vremeni zhivet moneta
-	SetTimeOut(10);
-
-	StartCoin();
-	StartPlayer();
-	StartGUI();
+	
 	
 	while (true) {
+		unsigned short key = KeyPressed();
+		if (key == 0x1B)// escape
+		{
+			sg.Coins = CurrentCoinsCount();
+			sg.Timer = CurrentTimer();
+
+			const Point &a = CoinPosition();
+			const Point &b = PlayerPosition();
+
+			sg.Cx = a.x;
+			sg.Cy = a.y;
+			sg.Px = b.x;
+			sg.Py = b.y;
+
+			SaveGame(sg);
+			break;
+		}
+
+		SetCurrentKey(key);
+
 		UpdateCoin();
 		UpdatePlayer();
 		UpdateGUI();
@@ -43,5 +77,5 @@ int main() {
 	//gotoxy(79, 24);
 	//cout << '1';
 
-
+	system("pause");
 }

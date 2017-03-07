@@ -20,6 +20,28 @@ char coinsText[20] = { 0 };
 void updateTimer();
 void updateCoins();
 
+int CurrentCoinsCount()
+{
+	return coinsCount;
+}
+
+void SetCoinsCount(int c)
+{
+	coinsCount = c;
+}
+
+int CurrentTimer()
+{
+	return timeToEnd;
+}
+
+void SetTimer(int t)
+{
+	timeToEnd = t;
+	started = true;
+	framesIgnored = 9;
+}
+
 void SetTimeOut(int v)
 {
 	TimeOut = v;
