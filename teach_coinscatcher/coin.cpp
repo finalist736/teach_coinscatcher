@@ -1,7 +1,6 @@
 #include <time.h>
 #include <stdlib.h>
 #include <iostream>
-
 #include "coin.h"
 
 static int startTime = 0;
@@ -13,6 +12,7 @@ static int CoinLifeTime = 5;
 
 void ShowCoin();
 void RemoveCoin();
+void printCoin();
 
 void SetCoinLifeTime(int value){
 	CoinLifeTime = value;
@@ -35,12 +35,20 @@ void SetCoinPosition(const Point& p)
 {
 	coinPoint = p;
 	startTime = 0;
+	now = time(NULL);
 	removeTime = now + CoinLifeTime;
+	printCoin();
 }
 
 inline void GetRandomPoint() {
 	coinPoint.x = rand() % 80;
 	coinPoint.y = rand() % 24 + 1;
+}
+
+void printCoin() {
+	gotoxy(coinPoint);
+	settextcolor(GREEN_COLOR);
+	std::cout << '$';
 }
 
 void ShowCoin() {
@@ -54,9 +62,7 @@ void ShowCoin() {
 		return;
 	}
 	GetRandomPoint();
-	gotoxy(coinPoint);
-	settextcolor(GREEN_COLOR);
-	std::cout << '$';
+	printCoin();
 	startTime = 0;
 	removeTime = now + CoinLifeTime;
 }

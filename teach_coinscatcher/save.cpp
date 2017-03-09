@@ -24,7 +24,7 @@ bool LoadGame(GameSave* sg)
 	}
 	size_t blocksReaded = fread(sg, sizeof(GameSave), 1, f);
 	fclose(f);
-	//remove(savingFileName);
+	remove(savingFileName);
 	if (blocksReaded == 1)
 	{
 		return true;
