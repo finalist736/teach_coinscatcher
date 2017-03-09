@@ -5,13 +5,6 @@ HANDLE rhnd = GetStdHandle(STD_INPUT_HANDLE);  // handle to read console
 DWORD Events = 0;     // Event count
 DWORD EventsRead = 0; // Events read from console
 
-void Start() {
-	rhnd = GetStdHandle(STD_INPUT_HANDLE);  // handle to read console
-
-	//DWORD Events = 0;     // Event count
-	//DWORD EventsRead = 0; // Events read from console
-}
-
 unsigned short KeyPressed() {
 
 	unsigned short resultKey = 0;
